@@ -37,7 +37,7 @@ Os testadores terão **acesso antecipado às novas funcionalidades** antes do la
 
 1. Entre no grupo de testadores:
 
-https://groups.google.com/g/fitbody-pro-testers/join
+https://groups.google.com/g/fitbody-pro-testers
 
 2. Ative o acesso ao aplicativo:
 

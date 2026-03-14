@@ -9,15 +9,16 @@ const STEPS = [
     description:
       "Acesse o Google Groups e entre no grupo oficial de testadores do FitBody Pro.",
     buttonText: "Entrar no grupo de testadores",
-    link: "https://groups.google.com/g/fitbody-pro-testers/join",
+    link: "https://groups.google.com/g/fitbody-pro-testers",
     icon: Users,
   },
   {
     number: 2,
     title: "Ative o acesso ao app",
     description:
-      "Após entrar no grupo, ative o teste do aplicativo na Google Play Store.",
+      "Após entrar no grupo, ative o teste do aplicativo na Google Play Store. O aplicativo ficará disponível em até 24 horas.",
     buttonText: "Ativar acesso ao app na Play Store",
+    // https://play.google.com/store/apps/details?id=com.twinex.fitbodypro
     link: "https://play.google.com/apps/testing/com.twinex.fitbodypro",
     icon: Smartphone,
   },
@@ -98,8 +99,8 @@ const StepperSection = forwardRef<HTMLElement>((_, ref) => {
                   complete
                     ? "border-accent/40 bg-accent/5"
                     : locked
-                    ? "border-border/50 bg-card/50 opacity-60"
-                    : "border-primary/30 bg-card"
+                      ? "border-border/50 bg-card/50 opacity-60"
+                      : "border-primary/30 bg-card"
                 }`}
               >
                 <div className="flex items-start gap-4">
@@ -109,8 +110,8 @@ const StepperSection = forwardRef<HTMLElement>((_, ref) => {
                       complete
                         ? "bg-accent text-accent-foreground glow-accent"
                         : locked
-                        ? "bg-secondary text-muted-foreground"
-                        : "bg-primary/20 text-primary"
+                          ? "bg-secondary text-muted-foreground"
+                          : "bg-primary/20 text-primary"
                     }`}
                   >
                     {complete ? (
@@ -189,14 +190,21 @@ const StepperSection = forwardRef<HTMLElement>((_, ref) => {
                 transition={{ type: "spring", delay: 0.2 }}
                 className="w-16 h-16 rounded-full bg-accent text-accent-foreground flex items-center justify-center mx-auto mb-4"
               >
-                <Download className="w-8 h-8" />
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.twinex.fitbodypro&hl=pt-Br"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center"
+                >
+                  <Download className="w-8 h-8" />
+                </a>
               </motion.div>
               <h3 className="font-display text-2xl font-bold mb-2">
                 🎉 Tudo pronto!
               </h3>
               <p className="text-muted-foreground">
-                Agora você pode instalar o FitBody Pro pela Google Play Store.
-                O app estará disponível em alguns minutos.
+                Agora você pode instalar o FitBody Pro pela Google Play Store. O
+                app estará disponível em <b>algumas horas</b>.
               </p>
             </motion.div>
           )}
