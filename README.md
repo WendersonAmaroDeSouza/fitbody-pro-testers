@@ -1,73 +1,113 @@
-# Welcome to your Lovable project
+# FitBody Pro - Beta Testers Landing Page
 
-## Project info
+Landing page criada para recrutar **testadores beta do aplicativo FitBody Pro**.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+A página guia o usuário por um fluxo simples para participar do programa de testes do aplicativo Android, garantindo que ele complete as duas etapas necessárias para liberar o acesso ao app.
 
-## How can I edit this code?
+## 🚀 Objetivo
 
-There are several ways of editing your application.
+Permitir que usuários interessados participem do **programa de testes do FitBody Pro** antes do lançamento oficial na Play Store.
 
-**Use Lovable**
+O fluxo da página conduz o usuário pelas seguintes etapas:
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+1. Entrar no grupo de testadores
+2. Ativar o acesso ao aplicativo na Play Store
+3. Instalar e começar a testar o app
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🌐 Acesse a landing page
 
-**Use your preferred IDE**
+Após publicada no GitHub Pages, a página estará disponível em:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+```
+https://WendersonAmaroDeSouza.github.io/fitbody-pro-testers/
+```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 📱 Sobre o FitBody Pro
 
-Follow these steps:
+FitBody Pro é um aplicativo voltado para acompanhamento físico e evolução corporal, permitindo registrar informações importantes como:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- Avaliações físicas
+- Fotos de evolução
+- Histórico corporal
+- Acompanhamento de progresso
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Os testadores terão **acesso antecipado às novas funcionalidades** antes do lançamento oficial.
 
-# Step 3: Install the necessary dependencies.
-npm i
+## 🧪 Como participar do beta
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+1. Entre no grupo de testadores:
+
+https://groups.google.com/g/fitbody-pro-testers/join
+
+2. Ative o acesso ao aplicativo:
+
+https://play.google.com/apps/testing/com.twinex.fitbodypro
+
+3. Instale o app pela Play Store.
+
+## 🛠 Tecnologias utilizadas
+
+Este projeto foi desenvolvido utilizando:
+
+- React
+- Vite
+- TypeScript
+- Tailwind CSS
+
+A estrutura foi gerada utilizando a plataforma **Lovable**.
+
+## 📦 Instalação local
+
+Clone o repositório:
+
+```bash
+git clone https://github.com/WendersonAmaroDeSouza/fitbody-pro-testers.git
+```
+
+Entre na pasta do projeto:
+
+```bash
+cd fitbody-pro-testers
+```
+
+Instale as dependências:
+
+```bash
+npm install
+```
+
+Execute o projeto:
+
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+A aplicação estará disponível em:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```
+http://localhost:8080
+```
 
-**Use GitHub Codespaces**
+## 🚀 Deploy
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+O deploy da landing page é feito utilizando **GitHub Pages**.
 
-## What technologies are used for this project?
+Para gerar o build:
 
-This project is built with:
+```bash
+npm run build
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Para publicar:
 
-## How can I deploy this project?
+```bash
+npm run deploy
+```
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## 👨‍💻 Autor
 
-## Can I connect a custom domain to my Lovable project?
+Desenvolvido por **Wenderson Amaro Sakamoto De Souza**.
 
-Yes, you can!
+## 📄 Licença
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Este projeto é de uso interno para o programa de testes do FitBody Pro.
