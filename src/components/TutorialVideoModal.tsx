@@ -136,7 +136,7 @@ const TutorialVideoModal = ({
               Tutorial rápido
             </DialogPrimitive.Title>
             <DialogPrimitive.Description className="text-sm text-muted-foreground">
-              Assista ao vídeo para entender como usar o aplicativo.
+              Assista ao vídeo para entender como testar o aplicativo.
             </DialogPrimitive.Description>
           </div>
 
@@ -194,6 +194,16 @@ const TutorialVideoModal = ({
               />
             </div>
           )}
+
+          <div className="mt-auto border-t border-border pt-3">
+            <Button
+              className="min-h-11 w-full whitespace-normal text-center leading-snug"
+              onClick={handleClose}
+            >
+              Terminou de assistir ao vídeo tutorial? Então clique aqui para
+              continuar
+            </Button>
+          </div>
 
           <button
             type="button"

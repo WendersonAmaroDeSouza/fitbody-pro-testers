@@ -37,6 +37,11 @@ describe("TutorialVideoModal", () => {
       "h-11",
       "w-11",
     );
+    expect(
+      screen.getByRole("button", {
+        name: /terminou de assistir ao vídeo tutorial\?/i,
+      }),
+    ).toBeInTheDocument();
 
     pauseSpy.mockRestore();
     loadSpy.mockRestore();
@@ -80,6 +85,33 @@ describe("TutorialVideoModal", () => {
     render(<ModalHarness />);
 
     fireEvent.click(screen.getByRole("button", { name: /^fechar$/i }));
+
+    await waitFor(() => {
+      expect(screen.queryByRole("dialog")).toBeNull();
+    });
+
+    expect(pauseSpy).toHaveBeenCalled();
+    expect(loadSpy).toHaveBeenCalled();
+
+    pauseSpy.mockRestore();
+    loadSpy.mockRestore();
+  });
+
+  it("fecha via botão inferior e garante parada completa do vídeo", async () => {
+    const pauseSpy = vi
+      .spyOn(HTMLMediaElement.prototype, "pause")
+      .mockImplementation(() => undefined);
+    const loadSpy = vi
+      .spyOn(HTMLMediaElement.prototype, "load")
+      .mockImplementation(() => undefined);
+
+    render(<ModalHarness />);
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: /terminou de assistir ao vídeo tutorial\?/i,
+      }),
+    );
 
     await waitFor(() => {
       expect(screen.queryByRole("dialog")).toBeNull();
