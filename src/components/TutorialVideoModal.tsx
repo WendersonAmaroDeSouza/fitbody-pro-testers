@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { AlertTriangle, RotateCcw, X } from "lucide-react";
 
@@ -19,6 +19,7 @@ const TutorialVideoModal = ({
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hasError, setHasError] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
+  const swipeStartRef = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     if (!open) return;
@@ -50,6 +51,50 @@ const TutorialVideoModal = ({
     handleClose();
   };
 
+  const handleSwipeStart = (event: PointerEvent) => {
+    swipeStartRef.current = { x: event.clientX, y: event.clientY };
+  };
+
+  const handleSwipeEnd = (event: PointerEvent) => {
+    const start = swipeStartRef.current;
+    swipeStartRef.current = null;
+    if (!start) return;
+
+    const dx = event.clientX - start.x;
+    const dy = event.clientY - start.y;
+
+    if (dy > 80 && Math.abs(dy) > Math.abs(dx) * 1.2) {
+      handleClose();
+    }
+  };
+
+  const requestFullscreenForMobile = async () => {
+    const video = videoRef.current as unknown as {
+      requestFullscreen?: () => Promise<void>;
+      webkitEnterFullscreen?: () => void;
+    } | null;
+    if (!video) return;
+
+    const isTouch =
+      typeof navigator !== "undefined" &&
+      (navigator.maxTouchPoints > 0 || "ontouchstart" in window);
+    const isMobileViewport =
+      window.matchMedia?.("(max-width: 768px)")?.matches ?? false;
+
+    if (!isTouch || !isMobileViewport) return;
+
+    try {
+      if (video.requestFullscreen) {
+        await video.requestFullscreen();
+        return;
+      }
+    } catch {}
+
+    try {
+      video.webkitEnterFullscreen?.();
+    } catch {}
+  };
+
   return (
     <DialogPrimitive.Root open={open} onOpenChange={handleOpenChange}>
       <DialogPrimitive.Portal>
@@ -66,10 +111,26 @@ const TutorialVideoModal = ({
         />
         <DialogPrimitive.Content
           className={cn(
-            "fixed left-[50%] top-[50%] z-50 grid w-full translate-x-[-50%] translate-y-[-50%] gap-4 border border-border bg-background p-4 text-foreground shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:rounded-lg sm:p-6",
+            "tutorial-video-modal-content fixed left-[50%] top-[50%] z-50 flex w-full translate-x-[-50%] translate-y-[-50%] flex-col gap-4 border border-border bg-background p-4 text-foreground shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:rounded-lg sm:p-6",
             "w-[calc(100vw-1.5rem)] max-w-5xl overflow-hidden sm:max-h-[90vh]",
           )}
         >
+          <div className="flex items-center justify-center sm:hidden">
+            <button
+              type="button"
+              aria-label="Arraste para fechar"
+              data-testid="tutorial-swipe-handle"
+              className="h-11 w-full max-w-[160px] touch-manipulation rounded-full"
+              onPointerDown={handleSwipeStart}
+              onPointerUp={handleSwipeEnd}
+              onPointerCancel={() => {
+                swipeStartRef.current = null;
+              }}
+            >
+              <div className="mx-auto h-1.5 w-16 rounded-full bg-muted" />
+            </button>
+          </div>
+
           <div className="space-y-2 pr-8">
             <DialogPrimitive.Title className="text-lg font-semibold leading-none tracking-tight">
               Tutorial rápido
@@ -95,11 +156,16 @@ const TutorialVideoModal = ({
               </div>
 
               <div className="mt-5 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-                <Button variant="secondary" onClick={handleClose}>
+                <Button
+                  variant="secondary"
+                  className="h-11"
+                  onClick={handleClose}
+                >
                   Continuar
                 </Button>
                 <Button
                   variant="outline"
+                  className="h-11"
                   onClick={() => {
                     setHasError(false);
                     setReloadKey((k) => k + 1);
@@ -111,17 +177,20 @@ const TutorialVideoModal = ({
               </div>
             </div>
           ) : (
-            <div className="relative overflow-hidden rounded-lg border border-border bg-card">
+            <div className="tutorial-video-container relative flex flex-1 overflow-hidden rounded-lg border border-border bg-card">
               <video
                 key={reloadKey}
                 ref={videoRef}
                 src={videoSrc}
                 data-testid="tutorial-video"
-                className="aspect-video w-full bg-background object-contain"
+                className="h-full w-full bg-background object-contain"
                 controls
                 playsInline
                 preload="metadata"
                 onError={() => setHasError(true)}
+                onPlay={() => {
+                  void requestFullscreenForMobile();
+                }}
               />
             </div>
           )}
@@ -129,7 +198,7 @@ const TutorialVideoModal = ({
           <button
             type="button"
             aria-label="Fechar"
-            className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
+            className="absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-md opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
             onClick={handleClose}
           >
             <X className="h-4 w-4" />

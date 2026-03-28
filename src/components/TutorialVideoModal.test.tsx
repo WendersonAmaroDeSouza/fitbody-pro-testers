@@ -33,9 +33,40 @@ describe("TutorialVideoModal", () => {
     const video = screen.getByTestId("tutorial-video");
     expect(video).toHaveAttribute("src", "/202603280807.mp4");
     expect(video).toHaveAttribute("controls");
+    expect(screen.getByRole("button", { name: /^fechar$/i })).toHaveClass(
+      "h-11",
+      "w-11",
+    );
 
     pauseSpy.mockRestore();
     loadSpy.mockRestore();
+  });
+
+  it("fecha ao fazer swipe para baixo no handle mobile", async () => {
+    vi.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(
+      () => undefined,
+    );
+    vi.spyOn(HTMLMediaElement.prototype, "load").mockImplementation(
+      () => undefined,
+    );
+
+    render(<ModalHarness />);
+
+    const handle = screen.getByTestId("tutorial-swipe-handle");
+    fireEvent.pointerDown(handle, {
+      pointerType: "touch",
+      clientX: 10,
+      clientY: 10,
+    });
+    fireEvent.pointerUp(handle, {
+      pointerType: "touch",
+      clientX: 10,
+      clientY: 140,
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByRole("dialog")).toBeNull();
+    });
   });
 
   it("fecha via botão X e garante parada completa do vídeo", async () => {
@@ -48,7 +79,7 @@ describe("TutorialVideoModal", () => {
 
     render(<ModalHarness />);
 
-    fireEvent.click(screen.getByRole("button", { name: /fechar/i }));
+    fireEvent.click(screen.getByRole("button", { name: /^fechar$/i }));
 
     await waitFor(() => {
       expect(screen.queryByRole("dialog")).toBeNull();

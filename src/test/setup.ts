@@ -30,3 +30,23 @@ Object.defineProperty(window, "IntersectionObserver", {
   writable: true,
   value: MockIntersectionObserver,
 });
+
+if (!("PointerEvent" in window)) {
+  class MockPointerEvent extends MouseEvent {
+    pointerId = 0;
+    width = 0;
+    height = 0;
+    pressure = 0;
+    tangentialPressure = 0;
+    tiltX = 0;
+    tiltY = 0;
+    twist = 0;
+    pointerType = "touch";
+    isPrimary = true;
+  }
+
+  Object.defineProperty(window, "PointerEvent", {
+    writable: true,
+    value: MockPointerEvent,
+  });
+}

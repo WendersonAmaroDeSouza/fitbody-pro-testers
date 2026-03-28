@@ -17,7 +17,7 @@ describe("Index (tutorial gate)", () => {
     expect(screen.getByRole("dialog")).toBeInTheDocument();
     expect(screen.queryByText(/twinex tecnologia/i)).toBeNull();
 
-    fireEvent.click(screen.getByRole("button", { name: /fechar/i }));
+    fireEvent.click(screen.getByRole("button", { name: /^fechar$/i }));
 
     await waitFor(() => {
       expect(screen.queryByRole("dialog")).toBeNull();
